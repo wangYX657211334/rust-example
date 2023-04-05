@@ -1,2 +1,0 @@
-# rust-example
-rust-example
