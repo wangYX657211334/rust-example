@@ -5,7 +5,6 @@
 /// ``` rust
 /// test
 /// ```
-
 #[derive(Debug)]
 struct User {
     name: String,
@@ -38,9 +37,9 @@ fn main() {
         name: String::from("名字"),
         age: 8,
     };
-    let name = user.name;
+    let name = user.get_name();
+    let age = user.get_age();
     let user2 = User::new("名字2", 16);
-    println!("name: {}, age: {}", user.get_name(), user.get_age());
-    println!("姓名1: {:#?}", user);
+    println!("name: {}, age: {}", name, age);
     println!("姓名2: {:#?}", user2);
 }
