@@ -1,35 +1,44 @@
 extern crate tui;
 
-use std::{
-    io::{self, stdout}, 
-    thread,
-    time::Duration
+use std::{io, thread, time::Duration};
+use tui::{
+    backend::CrosstermBackend,
+    widgets::{Widget, Block, Borders},
+    layout::{Layout, Constraint, Direction},
+    Terminal
 };
-use crossterm::{execute, style::Print};
-// use tui::{backend::CrosstermBackend, Terminal};
+use crossterm::{
+    event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
+    execute,
+    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+};
 
-// fn main1() -> Result<(), io::Error> {
-//     let stdout = io::stdout();
-//     let backend = CrosstermBackend::new(stdout);
-//     let mut terminal = Terminal::new(backend)?;
-//     println!("success!");
-//     Ok(())
-// }
+fn main() -> Result<(), io::Error> {
+    // setup terminal
+    enable_raw_mode()?;
+    let mut stdout = io::stdout();
+    execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
+    let backend = CrosstermBackend::new(stdout);
+    let mut terminal = Terminal::new(backend)?;
 
-fn main() -> io::Result<()> {
-    for i in 1..=50 {
-        execute!(stdout(), Print("[".to_string()))?;
-        for _ in 1..=i{
-            execute!(stdout(), Print("1".to_string()))?;
-        }
-        for _ in i..50{
-            execute!(stdout(), Print("0".to_string()))?;
-        }
-        execute!(stdout(), Print(format!("] {}%\r", i*2).to_string()))?;
-        thread::sleep(Duration::from_millis(100));
-    }
-    execute!(stdout(), Print("\ndone!\n".to_string()))?;
-    thread::sleep(Duration::from_millis(100));
-    // execute!(stdout(), Print("\x1B[2K\ra\n".to_string()))?;
+    terminal.draw(|f| {
+        let size = f.size();
+        let block = Block::default()
+            .title("Block")
+            .borders(Borders::ALL);
+        f.render_widget(block, size);
+    })?;
+
+    thread::sleep(Duration::from_millis(5000));
+
+    // restore terminal
+    disable_raw_mode()?;
+    execute!(
+        terminal.backend_mut(),
+        LeaveAlternateScreen,
+        DisableMouseCapture
+    )?;
+    terminal.show_cursor()?;
+
     Ok(())
 }

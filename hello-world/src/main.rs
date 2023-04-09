@@ -5,6 +5,7 @@
 /// ``` rust
 /// test
 /// ```
+
 #[derive(Debug)]
 struct User {
     name: String,
@@ -42,4 +43,8 @@ fn main() {
     let user2 = User::new("名字2", 16);
     println!("name: {}, age: {}", name, age);
     println!("姓名2: {:#?}", user2);
+    let res = hello_world::file::file_system::read("/Users/wangyx/office/GitHub/rust-example/README.md");
+    if let Ok(str) = res {
+        println!("{}", str)
+    }
 }

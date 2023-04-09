@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+  title: office-buddy - OpenAPI 3.0
+  description: 接口文档
+  contact:
+    email: wxh657211334@163.com
+  version: 0.1.0
+servers:
+  - url: https://www.wangyuxin.tech/office-buddy/api/v1
+tags:
+  - name: system
+    description: 系统基础接口
+paths:
+  /system/config:
+    post:
+      tags:
+        - system
+      summary: 保存系统配置
+      description: 保存系统配置
+      operationId: saveSystemConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemConfig'
+      responses:
+        default:
+          description: 系统配置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemConfig'
+    get:
+      tags:
+        - system
+      summary: 查询系统配置
+      description: 查询系统配置
+      operationId: getSystemConfigList
+      responses:
+        default:
+          description: 系统配置列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SystemConfig'
+  /system/config/{name}:
+    get:
+      tags:
+        - system
+      summary: 根据名称查询系统配置
+      description: 根据名称查询系统配置
+      operationId: getSystemConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: 系统配置名称
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: 系统配置
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemConfig'
+    delete:
+      tags:
+        - system
+      summary: 删除系统配置
+      description: 删除系统配置
+      operationId: deleteSystemConfig
+      parameters:
+        - name: name
+          in: path
+          description: 系统配置名称
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 删除成功
+components:
+  schemas:
+    SystemConfig:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: CONFIG_KEY
+        value:
+          type: string
+          example: CONFIG_VALUE
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Token
+      in: header
