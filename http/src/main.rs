@@ -18,7 +18,7 @@ fn main() {
         .load::<SystemConfig>(connection)
         .expect("Error loading SystemConfig");
 
-    println!("Displaying {} posts", results.len());
+    println!("Displaying {} system_config", results.len());
     for config in results {
         println!("{}", config.name);
         println!("-----------\n");
