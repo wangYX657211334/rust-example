@@ -2,7 +2,7 @@
 
 diesel::table! {
     system_config (id) {
-        id -> Unsigned<Bigint>,
+        id -> Int4,
         name -> Varchar,
         value -> Text,
     }
