@@ -3,10 +3,7 @@ mod models;
 mod schema;
 
 use diesel::prelude::*;
-use http::{
-    *,
-    models::*,
-};
+use http::*;
 
 fn main() {
     use self::schema::system_config::dsl::*;
@@ -15,7 +12,7 @@ fn main() {
     let results = system_config
         .filter(id.eq(1))
         .limit(5)
-        .load::<SystemConfig>(connection)
+        .load::<models::SystemConfig>(connection)
         .expect("Error loading SystemConfig");
 
     println!("Displaying {} system_config", results.len());
