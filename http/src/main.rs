@@ -1,27 +1,40 @@
-#[macro_use] extern crate rocket;
+mod utils;
+mod models;
+mod schema;
 
-use serde::{Deserialize, Serialize};
+use diesel::prelude::*;
+use http::{
+    *,
+    models::*,
+};
 
-#[derive(Deserialize, Serialize, Debug)]
-struct IpResponse {
-    origin: String
+fn main() {
+    use self::schema::system_config::dsl::*;
+    
+    let connection = &mut establish_connection();
+    let results = system_config
+        .filter(id.eq(1))
+        .limit(5)
+        .load::<SystemConfig>(connection)
+        .expect("Error loading SystemConfig");
+
+    println!("Displaying {} posts", results.len());
+    for config in results {
+        println!("{}", config.name);
+        println!("-----------\n");
+        println!("{}", config.value);
+    }
 }
 
-#[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
-}
-
-#[launch]
-fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
-}
-
+// use axum::{
+//     routing::get,
+//     Router,
+// };
 // #[tokio::main]
-// async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-//     let res = reqwest::get("http://httpbin.org/ip").await?
-//         .json::<IpResponse>().await?;
-//     println!("body: {:?}", res);
-//
-//     Ok(())
+// async fn main() {
+//     let app = Router::new().route("/", get(|| async { "Hello, World!" }));
+//     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+//         .serve(app.into_make_service()).await.unwrap();
+
 // }
+
