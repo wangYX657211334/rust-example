@@ -1,43 +1,23 @@
-mod utils;
-mod models;
-mod schema;
 mod controller;
+mod models;
 mod repository;
-
-use serde_json::json;
-use http::ConnectionPool;
-// fn main1() {
-//     use self::schema::system_config::dsl::*;
-    
-//     let connection = &mut init_connection();
-//     let results = system_config
-//         .filter(id.eq(1))
-//         .limit(5)
-//         .load::<models::SystemConfig>(connection)
-//         .expect("Error loading SystemConfig");
-
-//     println!("Displaying {} system_config", results.len());
-//     for config in results {
-//         println!("{}", config.name);
-//         println!("-----------\n");
-//         println!("{}", config.value);
-//     }
-// }
+mod schema;
+mod utils;
 
 use axum::{
-    routing::post,
-    Router,
-    response::IntoResponse,
     http::StatusCode,
-    Json
+    response::IntoResponse,
+    routing::{post, put},
+    Json, Router,
 };
+use serde_json::json;
 
 #[derive(Clone)]
-pub struct ApplicationState(ConnectionPool);
+pub struct AppState(http::ConnectionPool);
 
-pub struct ApplicationError(anyhow::Error);
+pub struct AppError(anyhow::Error);
 
-impl IntoResponse for ApplicationError {
+impl IntoResponse for AppError {
     fn into_response(self) -> axum::response::Response {
         let json = json!({ "message": format!("Something went wrong {}", self.0) });
         (StatusCode::INTERNAL_SERVER_ERROR, Json(json)).into_response()
@@ -45,7 +25,7 @@ impl IntoResponse for ApplicationError {
 }
 
 // allow use "?" in fn router
-impl<E> From<E> for ApplicationError
+impl<E> From<E> for AppError
 where
     E: Into<anyhow::Error>,
 {
@@ -54,15 +34,24 @@ where
     }
 }
 
-
 #[tokio::main]
 async fn main() {
     let connection = http::init_connection();
     let app = Router::new()
-        .route("/system", post(controller::system_config_controller::insert))
-        .with_state(ApplicationState(connection));
+        .route(
+            "/system",
+            post(controller::system_config_controller::insert)
+                .get(controller::system_config_controller::select_all),
+        )
+        .route(
+            "/system/:id",
+            put(controller::system_config_controller::update)
+                .delete(controller::system_config_controller::delete),
+        )
+        .with_state(AppState(connection));
+    println!("server started! {}", "0.0.0.0:3000");
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
-        .serve(app.into_make_service()).await.unwrap();
-
+        .serve(app.into_make_service())
+        .await
+        .unwrap();
 }
-
