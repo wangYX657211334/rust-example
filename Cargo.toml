@@ -3,5 +3,6 @@ members = [
     "hello-world",
     "macro-example",
     "terminal-example",
-    "office-buddy"
+    "office-buddy",
+    "office-buddy-cli",
 ]

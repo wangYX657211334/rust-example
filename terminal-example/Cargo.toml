@@ -7,4 +7,6 @@ edition = "2021"
 
 [dependencies]
 tui = "0.19"
-crossterm = "0.26.1"
+crossterm = { version = "0.26.1" }
+futures={ version="0.3.*", features = ["thread-pool"] }
+tokio = { version = "1", features = ["full"] }
