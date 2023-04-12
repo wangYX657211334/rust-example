@@ -1,15 +1,11 @@
 mod controller;
 mod models;
 mod repository;
+mod router;
 mod schema;
 mod utils;
 
-use axum::{
-    http::StatusCode,
-    response::IntoResponse,
-    routing::{post, put},
-    Json, Router,
-};
+use axum::{http::StatusCode, response::IntoResponse, Json};
 use serde_json::json;
 
 #[derive(Clone)]
@@ -37,18 +33,7 @@ where
 #[tokio::main]
 async fn main() {
     let connection = http::init_connection();
-    let app = Router::new()
-        .route(
-            "/system",
-            post(controller::system_config_controller::insert)
-                .get(controller::system_config_controller::select_all),
-        )
-        .route(
-            "/system/:id",
-            put(controller::system_config_controller::update)
-                .delete(controller::system_config_controller::delete),
-        )
-        .with_state(AppState(connection));
+    let app = router::root_router().with_state(AppState(connection));
     println!("server started! {}", "0.0.0.0:3000");
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
         .serve(app.into_make_service())

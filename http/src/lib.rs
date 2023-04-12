@@ -10,8 +10,8 @@ use std::env;
 pub type ConnectionPool = Pool<ConnectionManager<MysqlConnection>>;
 
 pub fn init_connection() -> ConnectionPool {
-    // dotenvy::from_filename(".env.office").ok();
-    dotenvy::from_filename(".env.local").ok();
+    dotenvy::from_filename(".env.office").ok();
+    // dotenvy::from_filename(".env.local").ok();
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let manager = ConnectionManager::<MysqlConnection>::new(&database_url);
