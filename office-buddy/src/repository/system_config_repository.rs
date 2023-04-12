@@ -28,6 +28,6 @@ pub async fn delete(conn: &mut MysqlConnection, id: i32) -> anyhow::Result<()> {
 }
 
 pub async fn select_all(conn: &mut MysqlConnection) -> anyhow::Result<Vec<SystemConfig>> {
-    use http::schema::system_config::dsl::*;
+    use crate::schema::system_config::dsl::*;
     Ok(system_config.load::<SystemConfig>(conn)?)
 }

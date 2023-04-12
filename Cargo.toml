@@ -3,5 +3,5 @@ members = [
     "hello-world",
     "macro-example",
     "terminal-example",
-    "http"
+    "office-buddy"
 ]

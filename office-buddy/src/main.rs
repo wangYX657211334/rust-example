@@ -9,7 +9,7 @@ use axum::{http::StatusCode, response::IntoResponse, Json};
 use serde_json::json;
 
 #[derive(Clone)]
-pub struct AppState(http::ConnectionPool);
+pub struct AppState(office_buddy::ConnectionPool);
 
 pub struct AppError(anyhow::Error);
 
@@ -32,7 +32,7 @@ where
 
 #[tokio::main]
 async fn main() {
-    let connection = http::init_connection();
+    let connection = office_buddy::init_connection();
     let app = router::root_router().with_state(AppState(connection));
     println!("server started! {}", "0.0.0.0:3000");
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
