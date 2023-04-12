@@ -1,3 +1,5 @@
+use crate::widgets::View;
+
 /// We derive Deserialize/Serialize so we can persist app state on shutdown.
 #[derive(serde::Deserialize, serde::Serialize)]
 #[serde(default)] // if we add new fields, give them default values when deserializing old state
@@ -65,7 +67,10 @@ impl eframe::App for TemplateApp {
         });
 
         egui::SidePanel::left("side_panel").show(ctx, |ui| {
-            ui.heading("Side Panel");
+            ui.heading(format!(
+                "Side Panel: {}",
+                chrono::prelude::Utc::now().format("%Y-%m-%d %H:%M:%S")
+            ));
 
             ui.horizontal(|ui| {
                 ui.label("Write something: ");
@@ -94,6 +99,8 @@ impl eframe::App for TemplateApp {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             // The central panel the region left after adding TopPanel's and SidePanel's
+
+            crate::widgets::time_record::TimeRecordWidget::default().ui(ui);
 
             ui.heading("eframe template");
             ui.hyperlink("https://github.com/emilk/eframe_template");
