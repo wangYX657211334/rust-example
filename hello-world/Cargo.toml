@@ -8,5 +8,6 @@ edition = "2021"
 
 [dependencies]
 futures={ version="0.3.*", features = ["thread-pool"] }
+yew = { version = "0.20.0", features = ["csr"] }
 global-hotkey="0.1.2"
 winit="0.28.3"
