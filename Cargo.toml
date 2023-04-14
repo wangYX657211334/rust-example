@@ -2,7 +2,7 @@
 members = [
     "hello-world",
     "macro-example",
-    "terminal-example",
+    "terminal-tool",
     "office-buddy",
     "office-buddy-cli",
 ]
