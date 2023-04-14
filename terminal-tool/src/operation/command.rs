@@ -10,7 +10,7 @@ macro_rules! sh {
                 )*
             )?
             let res = Command::new($program).args(&temp_vec).output();
-            let out = match res {
+            match res {
                 Ok(output) => {
                     if !output.status.success() {
                         println!("execute command: {} {}", $program, temp_vec.join(" "));
@@ -25,8 +25,7 @@ macro_rules! sh {
                     println!("err: \n{}", e);
                     process::exit(1);
                 }
-            };
-            out
+            }
         }
     };
 }
