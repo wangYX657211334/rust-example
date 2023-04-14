@@ -10,6 +10,9 @@ pub struct TemplateApp {
     // this how you opt-out of serialization of a member
     #[serde(skip)]
     value: f32,
+
+    switch: bool,
+
 }
 
 impl Default for TemplateApp {
@@ -18,6 +21,7 @@ impl Default for TemplateApp {
             // Example stuff:
             label: "Hello World!".to_owned(),
             value: 2.7,
+            switch: false
         }
     }
 }
@@ -38,6 +42,7 @@ impl TemplateApp {
     }
 }
 
+
 impl eframe::App for TemplateApp {
     /// Called by the frame work to save state before shutdown.
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
@@ -47,7 +52,7 @@ impl eframe::App for TemplateApp {
     /// Called each time the UI needs repainting, which may be many times per second.
     /// Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        let Self { label, value } = self;
+        let Self { label, value , switch} = self;
 
         // Examples of how to create different panels and windows.
         // Pick whichever suits you.
@@ -100,7 +105,8 @@ impl eframe::App for TemplateApp {
         egui::CentralPanel::default().show(ctx, |ui| {
             // The central panel the region left after adding TopPanel's and SidePanel's
 
-            crate::widgets::time_record::TimeRecordWidget::default().ui(ui);
+            // crate::widgets::time_record::TimeRecordWidget::default().ui(ui);
+            crate::widgets::toggle_switch::toggle_ui(ui, switch);
 
             ui.heading("eframe template");
             ui.hyperlink("https://github.com/emilk/eframe_template");

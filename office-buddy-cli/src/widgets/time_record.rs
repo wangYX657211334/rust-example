@@ -2,12 +2,12 @@ use crate::widgets::View;
 use egui::Ui;
 
 pub struct TimeRecordWidget {
-    data: Vec<String>,
+    data: Vec<bool>,
 }
 
 impl Default for TimeRecordWidget {
     fn default() -> Self {
-        Self { data: vec![] }
+        Self { data: vec![false; 20] }
     }
 }
 
@@ -22,6 +22,7 @@ impl View for TimeRecordWidget {
             .resizable(true)
             .cell_layout(egui::Layout::left_to_right(egui::Align::Center))
             .column(Column::auto())
+            .column(Column::auto())
             .column(Column::initial(100.0).range(40.0..=300.0))
             .column(Column::initial(100.0).at_least(40.0).clip(true))
             .column(Column::remainder())
@@ -30,9 +31,11 @@ impl View for TimeRecordWidget {
         // if let Some(row_nr) = self.scroll_to_row.take() {
         //     table = table.scroll_to_row(row_nr, None);
         // }
-
         table
             .header(20.0, |mut header| {
+                header.col(|ui| {
+                    ui.strong("Index");
+                });
                 header.col(|ui| {
                     ui.strong("Row");
                 });
@@ -51,6 +54,9 @@ impl View for TimeRecordWidget {
                     let is_thick = thick_row(row_index);
                     let row_height = if is_thick { 30.0 } else { 18.0 };
                     body.row(row_height, |mut row| {
+                        row.col(|ui| {
+                            ui.checkbox(&mut self.data[row_index], "");
+                        });
                         row.col(|ui| {
                             ui.label(row_index.to_string());
                         });

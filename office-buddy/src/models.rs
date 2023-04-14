@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 #[diesel(table_name = system_config)]
 pub struct SystemConfig {
     pub id: i32,
+    pub group: String,
     pub name: String,
     pub value: String,
 }
@@ -13,6 +14,7 @@ pub struct SystemConfig {
 #[derive(Insertable, AsChangeset, Deserialize, Serialize, Debug)]
 #[diesel(table_name = system_config)]
 pub struct SaveSystemConfig {
+    pub group: String,
     pub name: String,
     pub value: String,
 }
