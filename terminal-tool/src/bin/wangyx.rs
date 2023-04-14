@@ -2,6 +2,7 @@ use std::env;
 use std::io::{Result, ErrorKind};
 use terminal_tool::operation::kube;
 fn main() -> Result<()>{
+    terminal_tool::operation::command::run()?;
     let args: Vec<String> = env::args().collect();
     let operation = &args[1];
     match operation.as_str() {
