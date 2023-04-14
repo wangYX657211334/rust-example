@@ -8,10 +8,10 @@ edition = "2021"
 [dependencies]
 dirs = "5.0.0"
 lazy_static = "1.4.0"
-tui = "0.19"
-crossterm = { version = "0.26.1" }
-futures={ version="0.3.*", features = ["thread-pool"] }
-tokio = { version = "1", features = ["full"] }
+#tui = "0.19"
+#crossterm = { version = "0.26.1" }
+#futures={ version="0.3.*", features = ["thread-pool"] }
+#tokio = { version = "1", features = ["full"] }
 
 [[bin]]
 name = "wangyx"
