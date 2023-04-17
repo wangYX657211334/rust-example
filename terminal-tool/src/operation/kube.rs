@@ -1,14 +1,7 @@
 use std::fs;
 use std::path::Path;
 use std::io::{Result, ErrorKind};
-use lazy_static::lazy_static;
-
-lazy_static! {
-    static ref HOME_DIR: String = match dirs::home_dir() {
-        Some(path) => path.to_str().unwrap().to_owned(),
-        None => panic!("Failed to get home directory!"),
-    };
-}
+use crate::operation::command::HOME_DIR;
 
 pub fn kube_use(flag: &str)  -> Result<()> {
 

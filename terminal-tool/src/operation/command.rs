@@ -1,5 +1,13 @@
-use std::process::{self, Command};
+use lazy_static::lazy_static;
 
+lazy_static! {
+    pub static ref HOME_DIR: String = match dirs::home_dir() {
+        Some(path) => path.to_str().unwrap().to_owned(),
+        None => panic!("Failed to get home directory!"),
+    };
+}
+
+#[macro_export]
 macro_rules! sh {
     ($program:expr $(, $($arg:expr),*)?) => {
         {
@@ -9,13 +17,13 @@ macro_rules! sh {
                     temp_vec.push($arg);
                 )*
             )?
-            let res = Command::new($program).args(&temp_vec).output();
+            let res = std::process::Command::new($program).args(&temp_vec).output();
             match res {
                 Ok(output) => {
                     if !output.status.success() {
                         println!("execute command: {} {}", $program, temp_vec.join(" "));
                         println!("stderr: \n{}", String::from_utf8_lossy(&output.stderr));
-                        process::exit(1);
+                        std::process::exit(1);
                     }else{
                         format!("{}", String::from_utf8_lossy(&output.stdout))
                     }
@@ -23,17 +31,20 @@ macro_rules! sh {
                 Err(e) => {
                     println!("execute command: {} {}", $program, temp_vec.join(" "));
                     println!("err: \n{}", e);
-                    process::exit(1);
+                    std::process::exit(1);
                 }
             }
         }
     };
 }
+pub(crate) use sh;
 
 pub fn run() -> std::io::Result<()> {
     let out = sh!("git", "help", "-a");
     println!("{}", out);
-    let out = sh!("pwdd", "aa", "-d");
+    let out = sh!("cd", "~/office");
+    println!("{}", out);
+    let out = sh!("ls", "-l");
     println!("{}", out);
 
     Ok(())
