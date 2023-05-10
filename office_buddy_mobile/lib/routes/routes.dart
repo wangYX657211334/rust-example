@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
-import 'package:office_buddy/pages/feature/eat_time/add/eat_time_add_view.dart';
 
+import '../pages/feature/eat_time/add/eat_time_add_binding.dart';
+import '../pages/feature/eat_time/add/eat_time_add_view.dart';
+import '../pages/feature/eat_time/eat_time_binding.dart';
 import '../pages/feature/eat_time/eat_time_view.dart';
 import '../pages/feature/eat_time_history/eat_time_history_view.dart';
 import '../pages/home/home_binding.dart';
@@ -23,12 +25,12 @@ class AppRoutes {
     GetPage(
       name: eatTime,
       page: () => const EatTimeView(),
-      // binding: HomeBinding(),
+      binding: EatTimeBinding(),
     ),
     GetPage(
       name: eatTimeAdd,
       page: () => const EatTimeAdd(),
-      // binding: HomeBinding(),
+      binding: EatTimeAddBinding(),
     ),
     GetPage(
       name: eatTimeHistory,

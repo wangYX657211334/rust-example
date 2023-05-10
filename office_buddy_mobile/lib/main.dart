@@ -2,10 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:office_buddy/routes/routes.dart';
 
-// import 'pages/home/eattime/eat_time_view.dart';
-import 'pages/feature/feature_view.dart';
-
 void main() {
+  // Get.changeTheme(ThemeData.dark());
   runApp(
       GetMaterialApp(
         theme: ThemeData(
