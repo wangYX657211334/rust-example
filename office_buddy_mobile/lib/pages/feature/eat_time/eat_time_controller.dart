@@ -9,7 +9,6 @@ class EatTimeController extends GetxController {
   final HttpClient api = HttpClient();
 
   Timer? _timer;
-  var count = 0.obs;
   var now = DateTime.now().obs;
   var data = <EatTimeModel>[].obs;
 
@@ -19,9 +18,7 @@ class EatTimeController extends GetxController {
     api.onInit();
     refreshData();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      count++;
       now.value = DateTime.now();
-      // print(DateTime.now().toIso8601String());
     });
   }
 
@@ -55,7 +52,6 @@ class EatTimeController extends GetxController {
     EatTimeModel model = modelList[index];
     DateTime nowDate = DateTime.now();
     DateTime modelDate = DateTime.parse(model.time);
-
     var note = ['', '昨天', '前天'][nowDate.day - modelDate.day];
     if (index > 0) {
       note += '${note.isEmpty ? '' : ', '}间隔';

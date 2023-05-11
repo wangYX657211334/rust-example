@@ -12,37 +12,45 @@ class EatTimeView extends GetView<EatTimeController> {
 
   @override
   Widget build(BuildContext context) {
-    // final EatTimeController c = Get.find();
-    return BaseWidget.backgroundImageWidget(Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Get.toNamed(AppRoutes.eatTimeAdd);
-              },
-            )
-          ],
-          backgroundColor: Colors.white10,
-          title: const Text('王知槿吃奶时间记录'),
-        ),
-        body: Obx(() => ListView.builder(
-            itemCount: controller.data.length + 1,
-            itemBuilder: (context, index) {
-              if (index == controller.data.length) {
-                return _Warn(controller);
-              }
-              return _EatTimeDetail(index, controller.data, controller.getNote,
-                controller.delete);
-            },
-          ))),
-        );
+    return BaseWidget.backgroundImageWidget(
+      Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () async {
+                  var result = await Get.toNamed(AppRoutes.eatTimeAdd);
+                  if(result == refreshFlag){
+                    controller.refreshData();
+                  }
+                },
+              )
+            ],
+            backgroundColor: Colors.white10,
+            title: const Text('王知槿吃奶时间记录'),
+          ),
+          body: Obx(() => Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.data.length,
+                      itemBuilder: (context, index) {
+                        return _EatTimeDetail(index, controller.data,
+                            controller.getNote, controller.delete);
+                      },
+                    ),
+                  ),
+                  _Warn(controller, controller.data, controller.now.value)
+                ],
+              ))),
+    );
   }
 }
 
 class _EatTimeDetail extends StatelessWidget {
-  const _EatTimeDetail(this.index, this.modelList, this.getNote, this.delete, {super.key});
+  const _EatTimeDetail(this.index, this.modelList, this.getNote, this.delete,
+      {super.key});
 
   final int index;
   final List<EatTimeModel> modelList;
@@ -53,31 +61,13 @@ class _EatTimeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.access_time, size: 50.0),
+        leading: const Icon(Icons.access_time, size: 50.0),
         title: Text(modelList[index].time.substring(11, 16)),
         subtitle: Text(getNote(index, modelList)),
         trailing: IconButton(
-          icon: Icon(Icons.delete),
-          onPressed: () => showCupertinoDialog(
-              context: context,
-              builder: (context) => CupertinoAlertDialog(
-                    content: Text(
-                      '确定删除?',
-                      style: TextStyle(color: Color(0xFFFF0000)),
-                    ),
-                    actions: [
-                      TextButton(
-                          child: Text('取消'),
-                          onPressed: () => Navigator.pop(context)),
-                      TextButton(
-                        child: Text('确定'),
-                        onPressed: () {
-                          delete(modelList[index].id);
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  )),
+          icon: const Icon(Icons.delete),
+          onPressed: () => showDeleteDialog(
+              context: context, onPressed: () => delete(modelList[index].id)),
         ),
       ),
     );
@@ -85,18 +75,20 @@ class _EatTimeDetail extends StatelessWidget {
 }
 
 class _Warn extends StatelessWidget {
-  const _Warn(this.c);
+  const _Warn(this.c, this.data, this.now);
+
   final EatTimeController c;
+  final List<EatTimeModel> data;
+  final DateTime now;
 
   @override
   Widget build(BuildContext context) {
     var interval = "0秒";
     var future = "00:00";
-    if(c.data.isNotEmpty){
-      interval = c.getInterval(DateTime.parse(c.data.last.time), c.now.value, true);
-      var futureTime = DateTime.parse(c.data.last.time).add(const Duration(hours: 3))
-          // +8时区
-          .add(const Duration(hours: 8));
+    if (data.isNotEmpty) {
+      interval = c.getInterval(DateTime.parse(data.last.time), now, true);
+      var futureTime =
+          DateTime.parse(data.last.time).add(const Duration(hours: 3));
       future = "${futureTime.hour}:${futureTime.minute}";
     }
     return Card(
@@ -108,5 +100,4 @@ class _Warn extends StatelessWidget {
       ),
     );
   }
-
 }

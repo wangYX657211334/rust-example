@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:office_buddy/util/base_widget.dart';
 
 import '../../../../util/HttpClient.dart';
 import '../model/eat_time.dart';
@@ -25,7 +26,17 @@ class EatTimeAddController extends GetxController {
   void onInit() async {
     super.onInit();
     api.onInit();
+  }
 
+  int getValueIndex(int value){
+    int i = 0;
+    for (var item in values) {
+      if(value == item){
+        return i;
+      }
+      i++;
+    }
+    return 0;
   }
 
   void save() async {
@@ -39,8 +50,8 @@ class EatTimeAddController extends GetxController {
 
     var result = await api.post("/home/time", model.toJson());
     if(result.isOk){
+      Get.back(result: refreshFlag);
       Get.snackbar('提示', '保存成功!');
-      // Timer(Duration(milliseconds: 100), ()=> Get.back());
     }else{
       Get.snackbar('提示', '保存失败!');
     }

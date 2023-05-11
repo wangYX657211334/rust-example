@@ -32,7 +32,7 @@ class EatTimeModel {
 
   factory EatTimeModel.fromJson(Map<String, dynamic> json) => EatTimeModel(
     id: json["id"] as int,
-    time: json["time"] as String,
+    time: (json["time"] as String).substring(0, 19),
     motherFeeding: json["motherFeeding"] as int,
     breastMilk: json["breastMilk"] as int,
     powderedMilk: json["powderedMilk"] as int,

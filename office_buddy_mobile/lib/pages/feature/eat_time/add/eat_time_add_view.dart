@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:office_buddy/util/base_widget.dart';
-import 'package:office_buddy/util/select.dart';
 
 import 'eat_time_add_controller.dart';
 
@@ -81,6 +80,7 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                 trailing: Obx(() => Text('${controller.breastMilk.value}ml')),
                 onTap: () => showSelect(
                     context: context,
+                    initialItem: controller.getValueIndex(controller.breastMilk.value),
                     children: controller.values
                         .map((e) => Center(child: Text("${e}ml")))
                         .toList(),
@@ -94,6 +94,7 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                 trailing: Obx(() => Text('${controller.powderedMilk.value}ml')),
                 onTap: () => showSelect(
                     context: context,
+                    initialItem: controller.getValueIndex(controller.powderedMilk.value),
                     children: controller.values
                         .map((e) => Center(child: Text("${e}ml")))
                         .toList(),
