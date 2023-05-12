@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
 
 import '../../routes/routes.dart';
+import 'feature_controller.dart';
 
-class FeatureView extends StatelessWidget {
+class FeatureView extends GetView<FeatureController> {
   const FeatureView({super.key});
 
   @override
@@ -48,6 +50,26 @@ class FeatureView extends StatelessWidget {
               onTap: () {
                 Get.toNamed(AppRoutes.eatTimeHistory);
               },
+            ),
+          ),
+          Card(
+            color: Colors.white,
+            child: ListTile(
+              leading: Icon(Icons.stop_circle, size: 50.0),
+              // trailing: GFLoader(),
+              trailing:
+                  Obx(() => Text(controller.stopStatus.value ? '已预约' : '未预约')),
+              title: Row(
+                children: [
+                  const Text('停车'),
+                  Obx(() => TextButton(
+                        onPressed: controller.loading.value ? null
+                            : controller.changeStopStatus,
+                        child: Text(controller.stopStatus.value ? '取消预约' : '预约')),
+                  ),
+                  TextButton(onPressed: controller.refreshStopStatus, child: const Text("刷新"),)
+                ],
+              ),
             ),
           )
         ],
