@@ -24,6 +24,7 @@ class FeatureController extends GetxController {
     super.onInit();
     httpConnect.baseUrl = "https://openapi.longfor.com/tcy-appointment";
     httpConnect.onInit();
+    refreshStopStatus();
   }
 
   void changeStopStatus() async {

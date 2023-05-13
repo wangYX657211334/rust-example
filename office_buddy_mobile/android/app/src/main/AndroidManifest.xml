@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.office_buddy_mobile">
    <application
-        android:label="office_buddy_mobile"
+        android:label="家宝欢"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

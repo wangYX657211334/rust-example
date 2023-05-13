@@ -11,8 +11,8 @@ class BaseWidget {
     image: DecorationImage(
       fit: BoxFit.cover,
       colorFilter: ColorFilter.linearToSrgbGamma(),
-      image: NetworkImage(
-          "https://gitee.com/ITWangYX/static/raw/master/office-buddy/wangzj.jpg"),
+      image: AssetImage(
+          "assets/wangzj.jpg"),
     ),
   );
 
