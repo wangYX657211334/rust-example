@@ -12,7 +12,7 @@ class BaseWidget {
       fit: BoxFit.cover,
       colorFilter: ColorFilter.linearToSrgbGamma(),
       image: AssetImage(
-          "assets/wangzj.jpg"),
+          "assets/image/wangzj.jpg"),
     ),
   );
 

@@ -48,7 +48,7 @@ class FeatureController extends GetxController {
       var now = DateTime.now();
       var res = await httpConnect.post("/appointment", {
         "projectId": "155088791200100650",
-        "carNo": "辽A99C73",
+        "carNo": "辽BC93A2",
         "startTime": DateTime(now.year, now.month, now.day).millisecondsSinceEpoch,
         "endTime": DateTime(now.year, now.month, now.day, 23, 59, 59).millisecondsSinceEpoch,
         "reason": 6,
