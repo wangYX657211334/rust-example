@@ -5,7 +5,8 @@ class EatTimeUtil {
     EatTimeModel model = modelList[index];
     DateTime nowDate = DateTime.now();
     DateTime modelDate = DateTime.parse(model.time);
-    var note = ['', '昨天', '前天'][nowDate.day - modelDate.day];
+    int day = nowDate.day - modelDate.day;
+    var note = day > 2 ? '' : ['', '昨天', '前天'][day];
     if (index > 0) {
       note += '${note.isEmpty ? '' : ', '}间隔';
       DateTime latestDate = DateTime.parse(modelList[index - 1].time);
