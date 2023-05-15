@@ -16,24 +16,24 @@ class FeatureController extends GetxController {
     "x-gaia-api-key": "d90257df-31f1-4a53-847b-dd92ee6ba91b",
   };
 
-  var stopStatus = false.obs;
-  var loading = false.obs;
+  var stopStatus = {"default": false}.obs;
+  var loading = {"default": false}.obs;
 
   @override
   void onInit() {
     super.onInit();
     httpConnect.baseUrl = "https://openapi.longfor.com/tcy-appointment";
     httpConnect.onInit();
-    refreshStopStatus();
+    // refreshStopStatus();
   }
 
-  void changeStopStatus() async {
-    loading.value = true;
-    if (stopStatus.value) {
+  void changeStopStatus(String carNumber) async {
+    loading.update(carNumber, (value) => true, ifAbsent: () => true);
+    if (stopStatus.containsKey(carNumber)) {
       // 取消预约
-      var list = await _getList();
-      if(list.isNotEmpty){
-        var id = list[0]["id"];
+      var record = await _getList(carNumber);
+      if(record != null){
+        var id = record["id"];
         var res = await httpConnect.post("/appointment/cancel", {
           "lmToken": token,
           "bu_code": "C40601",
@@ -48,7 +48,7 @@ class FeatureController extends GetxController {
       var now = DateTime.now();
       var res = await httpConnect.post("/appointment", {
         "projectId": "155088791200100650",
-        "carNo": "辽BC93A2",
+        "carNo": carNumber,
         "startTime": DateTime(now.year, now.month, now.day).millisecondsSinceEpoch,
         "endTime": DateTime(now.year, now.month, now.day, 23, 59, 59).millisecondsSinceEpoch,
         "reason": 6,
@@ -60,18 +60,22 @@ class FeatureController extends GetxController {
         Get.snackbar("提示", "预约成功!");
       }
     }
-    refreshStopStatus();
+    refreshStopStatus(carNumber);
   }
 
-  void refreshStopStatus() async {
-    loading.value = true;
-    stopStatus.value = (await _getList()).isNotEmpty;
-    loading.value = false;
+  void refreshStopStatus(String carNumber) async {
+    loading.update(carNumber, (value) => true, ifAbsent: () => true);
+    if((await _getList(carNumber)) != null){
+      stopStatus.update(carNumber, (value) => true, ifAbsent: () => true);
+    }else{
+      stopStatus.remove(carNumber);
+    }
+    loading.remove(carNumber);
   }
 
-  Future<List<dynamic>> _getList() async {
+  Future<dynamic> _getList(String carNumber) async {
     var res = await httpConnect.get("/appointment?lmToken=$token&bu_code=C40601&page=1&row=10", headers: baseHeaders);
     var list = (res.body as Map<String, dynamic>)["data"] as List<dynamic>;
-    return list;
+    return list.firstWhere((element) => (element as Map<String, dynamic>)["carNo"] == carNumber, orElse: () => null);
   }
 }

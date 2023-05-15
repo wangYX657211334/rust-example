@@ -58,10 +58,10 @@ class FeatureView extends GetView<FeatureController> {
             child: ListTile(
               leading: Icon(Icons.stop_circle, size: 50.0),
               trailing: Obx(() {
-                if (controller.loading.value) {
+                if (controller.loading.containsKey("辽BC93A2")) {
                   return Container(child: Lottie.asset('assets/lottie/141677-loader.json'));
                 } else {
-                  return Text(controller.stopStatus.value ? '已预约' : '未预约');
+                  return Text(controller.stopStatus.containsKey("辽BC93A2") ? '已预约' : '未预约');
                 }
               }),
               title: Row(
@@ -69,14 +69,44 @@ class FeatureView extends GetView<FeatureController> {
                   const Text('停车'),
                   Obx(
                     () => TextButton(
-                        onPressed: controller.loading.value
+                        onPressed: controller.loading.containsKey("辽BC93A2")
                             ? null
-                            : controller.changeStopStatus,
+                            : ()=>controller.changeStopStatus("辽BC93A2"),
                         child:
-                            Text(controller.stopStatus.value ? '取消预约' : '预约')),
+                            Text(controller.stopStatus.containsKey("辽BC93A2") ? '取消预约' : '预约')),
                   ),
                   TextButton(
-                    onPressed: controller.refreshStopStatus,
+                    onPressed: ()=>controller.refreshStopStatus("辽BC93A2"),
+                    child: const Text("刷新"),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Card(
+            color: Colors.white,
+            child: ListTile(
+              leading: Icon(Icons.stop_circle, size: 50.0),
+              trailing: Obx(() {
+                if (controller.loading.containsKey("黑A7V1D5")) {
+                  return Container(child: Lottie.asset('assets/lottie/141677-loader.json'));
+                } else {
+                  return Text(controller.stopStatus.containsKey("黑A7V1D5") ? '已预约' : '未预约');
+                }
+              }),
+              title: Row(
+                children: [
+                  const Text('猛子专属'),
+                  Obx(
+                        () => TextButton(
+                        onPressed: controller.loading.containsKey("黑A7V1D5")
+                            ? null
+                            : ()=>controller.changeStopStatus("黑A7V1D5"),
+                        child:
+                        Text(controller.stopStatus.containsKey("黑A7V1D5") ? '取消预约' : '预约')),
+                  ),
+                  TextButton(
+                    onPressed: ()=>controller.refreshStopStatus("黑A7V1D5"),
                     child: const Text("刷新"),
                   )
                 ],
