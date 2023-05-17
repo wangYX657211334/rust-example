@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:office_buddy/util/base_widget.dart';
 
 import '../../routes/routes.dart';
 import 'feature_controller.dart';
@@ -46,6 +47,14 @@ class FeatureView extends GetView<FeatureController> {
           ),
           _StopItem(controller, "辽BC93A2", '停车'),
           _StopItem(controller, "黑A7V1D5", '猛子专属'),
+
+          Card(
+            color: Colors.white,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Obx(()=>Text('王知槿至今有${controller.wangZJYearsOld.value}')),
+            )
+          ),
           // _StopItem(controller, "辽H8N786", '吉男专属'),
         ],
       ),

@@ -50,7 +50,7 @@ class EatTimeAddController extends GetxController {
 
     var result = await api.post("/home/time", model.toJson());
     if(result.isOk){
-      Get.back(result: refreshFlag);
+      Get.back(result: REFRESH_FLAG);
       Get.snackbar('提示', '保存成功!');
     }else{
       Get.snackbar('提示', '保存失败!');

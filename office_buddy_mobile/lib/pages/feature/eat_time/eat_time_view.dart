@@ -21,7 +21,7 @@ class EatTimeView extends GetView<EatTimeController> {
                 icon: const Icon(Icons.add),
                 onPressed: () async {
                   var result = await Get.toNamed(AppRoutes.eatTimeAdd);
-                  if (result == refreshFlag) {
+                  if (result == REFRESH_FLAG) {
                     controller.refreshData();
                   }
                 },

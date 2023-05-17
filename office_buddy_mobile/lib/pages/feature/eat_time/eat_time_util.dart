@@ -26,9 +26,13 @@ class EatTimeUtil {
 
   static String getInterval(
       DateTime latestDate, DateTime modelDate, bool second) {
+    return getIntervalByMilliseconds(
+        modelDate.millisecondsSinceEpoch - latestDate.millisecondsSinceEpoch,
+        second);
+  }
+
+  static String getIntervalByMilliseconds(int interval, bool second) {
     String note = "";
-    var interval =
-        modelDate.millisecondsSinceEpoch - latestDate.millisecondsSinceEpoch;
     if (interval <= 0) {
       return "0秒";
     }
