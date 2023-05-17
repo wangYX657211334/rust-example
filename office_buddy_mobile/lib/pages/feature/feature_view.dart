@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../routes/routes.dart';
@@ -14,14 +13,6 @@ class FeatureView extends GetView<FeatureController> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.add),
-        //     onPressed: () {
-        //       Get.snackbar('title', 'message');
-        //     },
-        //   )
-        // ],
         title: const Text("主页"),
         backgroundColor: Colors.white10,
         elevation: 0,
@@ -53,68 +44,56 @@ class FeatureView extends GetView<FeatureController> {
               },
             ),
           ),
-          Card(
-            color: Colors.white,
-            child: ListTile(
-              leading: Icon(Icons.stop_circle, size: 50.0),
-              trailing: Obx(() {
-                if (controller.loading.containsKey("辽BC93A2")) {
-                  return Container(child: Lottie.asset('assets/lottie/141677-loader.json'));
-                } else {
-                  return Text(controller.stopStatus.containsKey("辽BC93A2") ? '已预约' : '未预约');
-                }
-              }),
-              title: Row(
-                children: [
-                  const Text('停车'),
-                  Obx(
-                    () => TextButton(
-                        onPressed: controller.loading.containsKey("辽BC93A2")
-                            ? null
-                            : ()=>controller.changeStopStatus("辽BC93A2"),
-                        child:
-                            Text(controller.stopStatus.containsKey("辽BC93A2") ? '取消预约' : '预约')),
-                  ),
-                  TextButton(
-                    onPressed: ()=>controller.refreshStopStatus("辽BC93A2"),
-                    child: const Text("刷新"),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Card(
-            color: Colors.white,
-            child: ListTile(
-              leading: Icon(Icons.stop_circle, size: 50.0),
-              trailing: Obx(() {
-                if (controller.loading.containsKey("黑A7V1D5")) {
-                  return Container(child: Lottie.asset('assets/lottie/141677-loader.json'));
-                } else {
-                  return Text(controller.stopStatus.containsKey("黑A7V1D5") ? '已预约' : '未预约');
-                }
-              }),
-              title: Row(
-                children: [
-                  const Text('猛子专属'),
-                  Obx(
-                        () => TextButton(
-                        onPressed: controller.loading.containsKey("黑A7V1D5")
-                            ? null
-                            : ()=>controller.changeStopStatus("黑A7V1D5"),
-                        child:
-                        Text(controller.stopStatus.containsKey("黑A7V1D5") ? '取消预约' : '预约')),
-                  ),
-                  TextButton(
-                    onPressed: ()=>controller.refreshStopStatus("黑A7V1D5"),
-                    child: const Text("刷新"),
-                  )
-                ],
-              ),
-            ),
-          )
+          _StopItem(controller, "辽BC93A2", '停车'),
+          _StopItem(controller, "黑A7V1D5", '猛子专属'),
+          // _StopItem(controller, "辽H8N786", '吉男专属'),
         ],
       ),
     );
   }
+}
+
+class _StopItem extends StatelessWidget{
+
+  _StopItem(this.controller, this.carNumber, this.name);
+
+  FeatureController controller;
+
+  String carNumber;
+  String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        color: Colors.white,
+        child: ListTile(
+          leading: Icon(Icons.stop_circle, size: 50.0),
+          trailing: Obx(() {
+            if (controller.loading.containsKey(carNumber)) {
+              return Container(child: Lottie.asset('assets/lottie/141677-loader.json'));
+            } else {
+              return Text(controller.stopStatus.containsKey(carNumber) ? '已预约' : '未预约');
+            }
+          }),
+          title: Row(
+            children: [
+              Text(name),
+              Obx(
+                    () => TextButton(
+                    onPressed: controller.loading.containsKey(carNumber)
+                        ? null
+                        : ()=>controller.changeStopStatus(carNumber),
+                    child:
+                    Text(controller.stopStatus.containsKey(carNumber) ? '取消预约' : '预约')),
+              ),
+              TextButton(
+                onPressed: ()=>controller.refreshStopStatus(carNumber),
+                child: const Text("刷新"),
+              )
+            ],
+          ),
+        ),
+      );
+  }
+
 }

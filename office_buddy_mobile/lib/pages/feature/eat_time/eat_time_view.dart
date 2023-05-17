@@ -21,7 +21,7 @@ class EatTimeView extends GetView<EatTimeController> {
                 icon: const Icon(Icons.add),
                 onPressed: () async {
                   var result = await Get.toNamed(AppRoutes.eatTimeAdd);
-                  if(result == refreshFlag){
+                  if (result == refreshFlag) {
                     controller.refreshData();
                   }
                 },
@@ -33,14 +33,15 @@ class EatTimeView extends GetView<EatTimeController> {
           body: Obx(() => Column(
                 children: [
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: controller.data.length,
-                      itemBuilder: (context, index) {
-                        return _EatTimeDetail(index, controller.data,
-                            controller.getNote, controller.delete);
-                      },
-                    ),
-                  ),
+                      child: BaseWidget.pullUpRefresh(
+                          ListView.builder(
+                            itemCount: controller.data.length,
+                            itemBuilder: (context, index) {
+                              return _EatTimeDetail(index, controller.data,
+                                  controller.getNote, controller.delete);
+                            },
+                          ),
+                          controller.refreshData)),
                   _Warn(controller, controller.data, controller.now.value)
                 ],
               ))),

@@ -1,20 +1,12 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 
 class FeatureController extends GetxController {
   final httpConnect = GetConnect();
+  final Codec<String, String> stringToBase64 = utf8.fuse(base64);
   final token = "ffc741e757cf4bf29a3eecf60c84f7a6";
-  final baseHeaders = {
-    "Host": "openapi.longfor.com",
-    "Origin": "https://tcy-appointment.wan-prod.longfor.com",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Connection": "keep-alive",
-    "Accept": "application/json, text/plain, */*",
-    "User-Agent":
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 16_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/qd-app-6.0.1-ios/qd-app-6.0.1-ios",
-    "Accept-Language": "zh-CN,zh-Hans;q=0.9",
-    "Referer": "https://tcy-appointment.wan-prod.longfor.com/",
-    "x-gaia-api-key": "d90257df-31f1-4a53-847b-dd92ee6ba91b",
-  };
+  var baseHeaders = {"": ""};
 
   var stopStatus = {"default": false}.obs;
   var loading = {"default": false}.obs;
@@ -22,9 +14,20 @@ class FeatureController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    httpConnect.baseUrl = "https://openapi.longfor.com/tcy-appointment";
+    baseHeaders = {
+      "Host": stringToBase64.decode("b3BlbmFwaS5sb25nZm9yLmNvbQ=="),
+      "Origin": stringToBase64.decode("aHR0cHM6Ly90Y3ktYXBwb2ludG1lbnQud2FuLXByb2QubG9uZ2Zvci5jb20="),
+      "Accept-Encoding": "gzip, deflate, br",
+      "Connection": "keep-alive",
+      "Accept": "application/json, text/plain, */*",
+      "User-Agent":
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 16_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/qd-app-6.0.1-ios/qd-app-6.0.1-ios",
+      "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+      "Referer": stringToBase64.decode("aHR0cHM6Ly90Y3ktYXBwb2ludG1lbnQud2FuLXByb2QubG9uZ2Zvci5jb20="),
+      "x-gaia-api-key": "d90257df-31f1-4a53-847b-dd92ee6ba91b",
+    };
+    httpConnect.baseUrl = stringToBase64.decode("aHR0cHM6Ly9vcGVuYXBpLmxvbmdmb3IuY29tL3RjeS1hcHBvaW50bWVudA==");
     httpConnect.onInit();
-    // refreshStopStatus();
   }
 
   void changeStopStatus(String carNumber) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+// import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 const int refreshFlag = 0;
 
@@ -16,10 +17,19 @@ class BaseWidget {
     ),
   );
 
+  // 背景
   static Widget backgroundImageWidget(Widget widget) {
     return Container(
       decoration: BaseWidget.backgroundImage,
       child: widget,
+    );
+  }
+
+  // 上拉刷新
+  static Widget pullUpRefresh(Widget widget, Future<void> Function() onRefresh){
+    return RefreshIndicator(
+        onRefresh: onRefresh,
+        child: widget
     );
   }
 }

@@ -39,6 +39,7 @@ dependencies:
   get: 4.6.1
   getwidget: ^2.0.4
   lottie: 2.3.2
+  pull_to_refresh: ^2.0.0
 #  get: 5.0.0-release-candidate-4
 
 dev_dependencies:

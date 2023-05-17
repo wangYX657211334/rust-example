@@ -23,7 +23,7 @@ class EatTimeController extends GetxController {
     });
   }
 
-  void refreshData() async {
+  Future<void> refreshData() async {
     var result = await api.get("/home/time/1",
         decoder: (val) => (val as List<dynamic>)
             .map((item) => EatTimeModel.fromJson(item as Map<String, dynamic>))
