@@ -10,10 +10,11 @@ import '../model/eat_time.dart';
 
 class EatTimeAddController extends GetxController {
   final HttpClient api = HttpClient();
+  final HttpClient lafApi = HttpClient();
   final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
   final DateFormat timeFormatter = DateFormat('HH:mm');
 
-  List<int> values = [0, 170, 180, 190];
+  RxList<int> milkList = [0, 170, 180, 190].obs;
 
   var date = DateTime.now().obs;
   var time = TimeOfDay.now().obs;
@@ -26,11 +27,16 @@ class EatTimeAddController extends GetxController {
   void onInit() async {
     super.onInit();
     api.onInit();
+    lafApi.baseUrl = "https://a2je7z.laf.run";
+    var result = await lafApi.get("/getSystemSetting?name=MILK_SIZE_LIST");
+    if(result.isOk){
+      milkList.value = (result.body as List<dynamic>).map((e) => e as int).toList();
+    }
   }
 
   int getValueIndex(int value){
     int i = 0;
-    for (var item in values) {
+    for (var item in milkList) {
       if(value == item){
         return i;
       }

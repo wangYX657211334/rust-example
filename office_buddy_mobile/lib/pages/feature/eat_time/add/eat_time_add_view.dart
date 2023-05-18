@@ -81,12 +81,12 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                 onTap: () => showSelect(
                     context: context,
                     initialItem: controller.getValueIndex(controller.breastMilk.value),
-                    children: controller.values
+                    children: controller.milkList
                         .map((e) => Center(child: Text("${e}ml")))
                         .toList(),
                     onChanged: (int selectedItem) {
                       controller.breastMilk.value =
-                          controller.values[selectedItem];
+                          controller.milkList[selectedItem];
                     })),
             // Divider(),
             ListTile(
@@ -95,12 +95,12 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                 onTap: () => showSelect(
                     context: context,
                     initialItem: controller.getValueIndex(controller.powderedMilk.value),
-                    children: controller.values
+                    children: controller.milkList
                         .map((e) => Center(child: Text("${e}ml")))
                         .toList(),
                     onChanged: (int selectedItem) {
                       controller.powderedMilk.value =
-                          controller.values[selectedItem];
+                          controller.milkList[selectedItem];
                     })),
             const Divider(),
           ],
