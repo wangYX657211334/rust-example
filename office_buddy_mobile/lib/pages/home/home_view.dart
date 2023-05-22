@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:office_buddy/util/base_widget.dart';
 
 import '../feature/feature_view.dart';
+import '../gpt/gpt_view.dart';
 import 'home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -24,6 +25,10 @@ class HomeView extends GetView<HomeController> {
                 label: '主页',
               ),
               NavigationDestination(
+                icon: Icon(Icons.tag_faces),
+                label: 'AI',
+              ),
+              NavigationDestination(
                 icon: Icon(Icons.account_circle_outlined),
                 label: '个人信息',
               ),
@@ -31,6 +36,7 @@ class HomeView extends GetView<HomeController> {
           ),
           body: <Widget>[
             const FeatureView(),
+            const MyHomePage(),
             Container(
               // color: Colors.green,
               alignment: Alignment.center,
