@@ -1,8 +1,5 @@
-mod controller;
-mod models;
-mod repository;
+mod function;
 mod router;
-mod schema;
 mod utils;
 
 use axum::{http::StatusCode, response::IntoResponse, Json};
@@ -32,7 +29,7 @@ where
 
 #[tokio::main]
 async fn main() {
-    let connection = office_buddy::init_connection();
+    let connection = office_buddy::init_connection().await;
     let app = router::root_router().with_state(AppState(connection));
     println!("server started! {}", "0.0.0.0:3000");
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())

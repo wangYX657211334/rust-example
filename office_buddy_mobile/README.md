@@ -17,3 +17,6 @@ https://hfybbs.gitee.io/flutter-getx-doc/quick-start#%E8%B7%AF%E7%94%B1%E7%AE%A1
 
 ## icon文档
 https://api.flutter.dev/flutter/material/Icons-class.html
+
+## 组件市场
+https://fluttergems.dev/chat/

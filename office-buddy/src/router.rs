@@ -1,19 +1,16 @@
-use crate::{controller, AppState};
+use crate::{function, AppState};
 use axum::{
-    routing::{post, put},
+    routing::{delete, get, post},
     Router,
 };
 
 pub fn root_router() -> Router<AppState> {
     Router::new()
         .route(
-            "/system",
-            post(controller::system_config_controller::insert)
-                .get(controller::system_config_controller::select_all),
+            "/system/:key",
+            post(function::system_config::save).get(function::system_config::get),
         )
-        .route(
-            "/system/:id",
-            put(controller::system_config_controller::update)
-                .delete(controller::system_config_controller::delete),
-        )
+        .route("/home/time/:id", delete(function::time_record::delete))
+        .route("/home/time/list/:mId", get(function::time_record::get))
+        .route("/home/time", post(function::time_record::insert))
 }
