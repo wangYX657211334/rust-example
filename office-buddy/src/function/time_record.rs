@@ -1,11 +1,13 @@
+use std::collections::HashMap;
 use crate::{AppError, AppState};
-use axum::extract::{Path, State};
+use axum::extract::{Path, Query, State};
 use axum::http::StatusCode;
 use axum::Json;
 use axum::response::IntoResponse;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use sqlx::{Execute, QueryBuilder};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct TimeRecord {
@@ -24,17 +26,26 @@ pub struct TimeRecord {
 pub async fn get(
     State(app): State<AppState>,
     Path(mId): Path<String>,
+    Query(query): Query<HashMap<String, String>>,
 ) -> anyhow::Result<impl IntoResponse, AppError> {
-    let row = sqlx::query_as!(
-        TimeRecord,
-        r#"select 
-            id, time, mother_feeding, breast_milk, powdered_milk, management_id 
-           from time_record_model 
-           where deleted_at is null and management_id = ? 
-           order by time desc 
-           limit 9"#,
-        mId
-    ).fetch_all(&app.0).await?;
+    let row;
+    if let Some(date) = query.get("date") {
+        row = sqlx::query_as!(TimeRecord,
+        r#"select
+                id, time, mother_feeding, breast_milk, powdered_milk, management_id
+               from time_record_model
+               where deleted_at is null and management_id = ? and DATE_FORMAT(time,'%Y-%m-%d') = ?
+               order by time desc
+               "#, mId, date).fetch_all(&app.0).await?;
+    } else {
+        row = sqlx::query_as!(TimeRecord,
+        r#"select
+                id, time, mother_feeding, breast_milk, powdered_milk, management_id
+               from time_record_model
+               where deleted_at is null and management_id = ?
+               order by time desc limit 9
+               "#, mId).fetch_all(&app.0).await?;
+    }
     if let Ok(json) = serde_json::to_string(&row) {
         Ok((StatusCode::OK, json))
     } else {
