@@ -24,16 +24,16 @@ class EatTimeController extends GetxController {
   }
 
   Future<void> refreshData() async {
-    var result = await api.get("/home/time/1",
+    var result = await api.get("/eat-time",
+        headers: api.baseHeaders,
         decoder: (val) => (val as List<dynamic>)
             .map((item) => EatTimeModel.fromJson(item as Map<String, dynamic>))
             .toList());
-    result.body?.sort((m1, m2) => m1.id - m2.id);
     data.value = result.body!;
   }
 
-  void delete(int id) async {
-    var result = await api.delete("/home/time/$id/1");
+  void delete(String id) async {
+    var result = await api.delete("/eat-time/$id", headers: api.baseHeaders);
     if(result.isOk){
       Get.snackbar('提示', '删除成功!');
       refreshData();
@@ -46,11 +46,6 @@ class EatTimeController extends GetxController {
       _timer!.cancel();
     }
     super.onClose();
-  }
-
-
-  String getNote(int index, List<EatTimeModel> modelList) {
-    return EatTimeUtil.getNote(index, modelList);
   }
 
   String getInterval(DateTime latestDate, DateTime modelDate, bool second) {

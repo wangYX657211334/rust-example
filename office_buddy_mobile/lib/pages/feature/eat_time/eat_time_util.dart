@@ -1,28 +1,6 @@
 import 'model/eat_time.dart';
 
 class EatTimeUtil {
-  static String getNote(int index, List<EatTimeModel> modelList) {
-    EatTimeModel model = modelList[index];
-    DateTime nowDate = DateTime.now();
-    DateTime modelDate = DateTime.parse(model.time);
-    int day = nowDate.day - modelDate.day;
-    var note = day > 2 ? '' : ['', '昨天', '前天'][day];
-    if (index > 0) {
-      note += '${note.isEmpty ? '' : ', '}间隔';
-      DateTime latestDate = DateTime.parse(modelList[index - 1].time);
-      note += getInterval(latestDate, modelDate, false);
-    }
-    if (model.motherFeeding > 0) {
-      note += "${note.isEmpty ? '' : ', '}亲喂";
-    }
-    if (model.breastMilk > 0) {
-      note += "${note.isEmpty ? '' : ', '}母乳${model.breastMilk}ml";
-    }
-    if (model.powderedMilk > 0) {
-      note += "${note.isEmpty ? '' : ', '}奶粉${model.powderedMilk}ml";
-    }
-    return note;
-  }
 
   static String getInterval(
       DateTime latestDate, DateTime modelDate, bool second) {

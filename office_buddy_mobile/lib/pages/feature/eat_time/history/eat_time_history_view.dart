@@ -59,7 +59,7 @@ class _EatTimeDetail extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.access_time, size: 50.0),
         title: Text(modelList[index].time.substring(11, 16)),
-        subtitle: Text(EatTimeUtil.getNote(index, modelList)),
+        subtitle: Text(modelList[index].note),
       ),
     );
   }

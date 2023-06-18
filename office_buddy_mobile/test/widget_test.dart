@@ -8,23 +8,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:office_buddy_mobile/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  var now = DateTime.now();
+  print({
+    "projectId": "155088791200100650",
+    "carNo": "辽AF39Q1",
+    "startTime":
+    DateTime(now.year, now.month, now.day).millisecondsSinceEpoch,
+    "endTime": DateTime(now.year, now.month, now.day, 23, 59, 59)
+        .millisecondsSinceEpoch,
+    "reason": 6,
+    "lmToken": "ffc741e757cf4bf29a3eecf60c84f7a6",
+    "bu_code": "C40601",
+    "contact": "13246876436"
   });
+
 }

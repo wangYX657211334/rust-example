@@ -37,8 +37,7 @@ class EatTimeView extends GetView<EatTimeController> {
                           ListView.builder(
                             itemCount: controller.data.length,
                             itemBuilder: (context, index) {
-                              return _EatTimeDetail(index, controller.data,
-                                  controller.getNote, controller.delete);
+                              return _EatTimeDetail(index, controller.data, controller.delete);
                             },
                           ),
                           controller.refreshData)),
@@ -50,13 +49,12 @@ class EatTimeView extends GetView<EatTimeController> {
 }
 
 class _EatTimeDetail extends StatelessWidget {
-  const _EatTimeDetail(this.index, this.modelList, this.getNote, this.delete,
+  const _EatTimeDetail(this.index, this.modelList, this.delete,
       {super.key});
 
   final int index;
   final List<EatTimeModel> modelList;
-  final String Function(int index, List<EatTimeModel> modelList) getNote;
-  final void Function(int id) delete;
+  final void Function(String id) delete;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class _EatTimeDetail extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.access_time, size: 50.0),
         title: Text(modelList[index].time.substring(11, 16)),
-        subtitle: Text(getNote(index, modelList)),
+        subtitle: Text(modelList[index].note),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () => showDeleteDialog(

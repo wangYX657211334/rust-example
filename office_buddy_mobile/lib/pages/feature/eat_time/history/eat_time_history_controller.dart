@@ -22,11 +22,11 @@ class EatTimeHistoryController extends GetxController {
   }
 
   void refreshData() async {
-    var result = await api.get("/home/time/1?date=${dateToString()}",
+    var result = await api.get("/eat-time?date=${dateToString()}",
+        headers: api.baseHeaders,
         decoder: (val) => (val as List<dynamic>)
             .map((item) => EatTimeModel.fromJson(item as Map<String, dynamic>))
             .toList());
-    result.body?.sort((m1, m2) => m1.id - m2.id);
     data.value = result.body!;
   }
 

@@ -10,7 +10,6 @@ import '../model/eat_time.dart';
 
 class EatTimeAddController extends GetxController {
   final HttpClient api = HttpClient();
-  final HttpClient lafApi = HttpClient();
   final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
   final DateFormat timeFormatter = DateFormat('HH:mm');
 
@@ -18,26 +17,25 @@ class EatTimeAddController extends GetxController {
 
   var date = DateTime.now().obs;
   var time = TimeOfDay.now().obs;
-  var motherFeeding = 1.obs;
+  var motherFeeding = true.obs;
   var breastMilk = 0.obs;
   var powderedMilk = 0.obs;
-  var managementId = 1.obs;
 
   @override
   void onInit() async {
     super.onInit();
     api.onInit();
-    lafApi.baseUrl = "https://a2je7z.laf.run";
-    var result = await lafApi.get("/getSystemSetting?name=MILK_SIZE_LIST");
-    if(result.isOk){
-      milkList.value = (result.body as List<dynamic>).map((e) => e as int).toList();
+    var result = await api.get("/system-config/MilkSize", headers: api.baseHeaders);
+    if (result.isOk) {
+      milkList.value =
+          (result.body as List<dynamic>).map((e) => e as int).toList();
     }
   }
 
-  int getValueIndex(int value){
+  int getValueIndex(int value) {
     int i = 0;
     for (var item in milkList) {
-      if(value == item){
+      if (value == item) {
         return i;
       }
       i++;
@@ -47,18 +45,18 @@ class EatTimeAddController extends GetxController {
 
   void save() async {
     var model = EatTimeModel(
-        id: 0,
+        id: '',
         motherFeeding: motherFeeding.value,
         breastMilk: breastMilk.value,
         powderedMilk: powderedMilk.value,
-        managementId: managementId.value,
-        time: "${dateToString()}T${timeToString()}:00+08:00");
+        time: "${dateToString()}T${timeToString()}:00",
+        note: '');
 
-    var result = await api.post("/home/time", model.toJson());
-    if(result.isOk){
+    var result = await api.post("/eat-time", model.toJson(), headers: api.baseHeaders);
+    if (result.isOk) {
       Get.back(result: REFRESH_FLAG);
       Get.snackbar('提示', '保存成功!');
-    }else{
+    } else {
       Get.snackbar('提示', '保存失败!');
     }
   }

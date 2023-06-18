@@ -9,33 +9,33 @@ class EatTimeModel {
     required this.motherFeeding,
     required this.breastMilk,
     required this.powderedMilk,
-    required this.managementId,
+    required this.note,
   });
 
-  int id;
+  String id;
   String time;
-  int motherFeeding;
+  bool motherFeeding;
   int breastMilk;
   int powderedMilk;
-  int managementId;
+  String note;
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = HashMap();
     json["id"] = id;
     json["time"] = time;
-    json["motherFeeding"] = motherFeeding;
-    json["breastMilk"] = breastMilk;
-    json["powderedMilk"] = powderedMilk;
-    json["managementId"] = managementId;
+    json["mother_feeding"] = motherFeeding;
+    json["breast_milk"] = breastMilk;
+    json["powdered_milk"] = powderedMilk;
     return json;
   }
 
   factory EatTimeModel.fromJson(Map<String, dynamic> json) => EatTimeModel(
-    id: json["id"] as int,
+    id: json["id"] as String,
     time: (json["time"] as String).substring(0, 19),
-    motherFeeding: json["motherFeeding"] as int,
-    breastMilk: json["breastMilk"] as int,
-    powderedMilk: json["powderedMilk"] as int,
-    managementId: json["managementId"] as int,
+    motherFeeding: json["mother_feeding"] as bool,
+    breastMilk: json["breast_milk"] as int,
+    powderedMilk: json["powdered_milk"] as int,
+    note: json["note"] as String
   );
+
 }

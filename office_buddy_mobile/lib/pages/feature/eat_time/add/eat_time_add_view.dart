@@ -67,10 +67,10 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
               title: Text('亲喂'),
               trailing: Obx(() => CupertinoSwitch(
                     // This bool value toggles the switch.
-                    value: controller.motherFeeding > 0,
+                    value: controller.motherFeeding.value,
                     activeColor: CupertinoColors.activeBlue,
                     onChanged: (value) {
-                      controller.motherFeeding.value = value ? 1 : 0;
+                      controller.motherFeeding.value = value;
                     },
                   )),
             ),
