@@ -44,7 +44,6 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                 ))!;
               },
             ),
-            // Divider(),
             ListTile(
               title: Text('时间'),
               trailing: Obx(() => Text(controller.timeToString())),
@@ -62,7 +61,6 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                 ))!;
               },
             ),
-            // Divider(),
             ListTile(
               title: Text('亲喂'),
               trailing: Obx(() => CupertinoSwitch(
@@ -74,13 +72,13 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                     },
                   )),
             ),
-            // Divider(),
             ListTile(
                 title: Text('母乳'),
                 trailing: Obx(() => Text('${controller.breastMilk.value}ml')),
                 onTap: () => showSelect(
                     context: context,
-                    initialItem: controller.getValueIndex(controller.breastMilk.value),
+                    initialItem:
+                        controller.getValueIndex(controller.breastMilk.value),
                     children: controller.milkList
                         .map((e) => Center(child: Text("${e}ml")))
                         .toList(),
@@ -88,13 +86,13 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                       controller.breastMilk.value =
                           controller.milkList[selectedItem];
                     })),
-            // Divider(),
             ListTile(
                 title: Text('奶粉'),
                 trailing: Obx(() => Text('${controller.powderedMilk.value}ml')),
                 onTap: () => showSelect(
                     context: context,
-                    initialItem: controller.getValueIndex(controller.powderedMilk.value),
+                    initialItem:
+                        controller.getValueIndex(controller.powderedMilk.value),
                     children: controller.milkList
                         .map((e) => Center(child: Text("${e}ml")))
                         .toList(),
@@ -102,6 +100,53 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                       controller.powderedMilk.value =
                           controller.milkList[selectedItem];
                     })),
+            const Divider(
+              indent: 50,
+              endIndent: 50,
+            ),
+            Expanded(
+                child: Obx(() => ListView.builder(
+                      itemCount: controller.otherFood.length,
+                      itemBuilder: (context, index) {
+                        // var food = controller.otherFood[index];
+                        return swipeToDelete(
+                            child: ListTile(
+                                title: Text(controller.otherFoodNameList[
+                                    controller.otherFood[index]["name"] ?? 0]),
+                                trailing: Text(controller.otherFoodSizeList[
+                                    controller.otherFood[index]["size"] ?? 0]),
+                                onTap: () => showMultipleSelect(
+                                    context: context,
+                                    initialItem: controller.otherFood[index],
+                                    children: {
+                                      "name": controller.otherFoodNameList
+                                          .map((n) => Center(child: Text(n)))
+                                          .toList(),
+                                      "size": controller.otherFoodSizeList
+                                          .map((n) => Center(child: Text(n)))
+                                          .toList()
+                                    },
+                                    onChanged: (key, value) {
+                                      var food = controller.otherFood[index];
+                                      food[key] = value;
+                                      controller.otherFood[index] = food;
+                                    })),
+                            deleteHandler: () =>
+                                controller.otherFood.removeAt(index));
+                      },
+                    ))),
+            const Divider(
+              indent: 50,
+              endIndent: 50,
+            ),
+            ListTile(
+              title: const Center(
+                child: Text('添加辅食'),
+              ),
+              onTap: () => {
+                controller.otherFood.add({"name": 0, "size": 0})
+              },
+            ),
             const Divider(),
           ],
         )));

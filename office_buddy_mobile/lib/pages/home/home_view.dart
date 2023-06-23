@@ -24,10 +24,10 @@ class HomeView extends GetView<HomeController> {
                 icon: Icon(Icons.home),
                 label: '主页',
               ),
-              NavigationDestination(
-                icon: Icon(Icons.tag_faces),
-                label: 'AI',
-              ),
+              // NavigationDestination(
+              //   icon: Icon(Icons.tag_faces),
+              //   label: 'AI',
+              // ),
               NavigationDestination(
                 icon: Icon(Icons.account_circle_outlined),
                 label: '个人信息',
@@ -36,7 +36,7 @@ class HomeView extends GetView<HomeController> {
           ),
           body: <Widget>[
             const FeatureView(),
-            const MyHomePage(),
+            // const MyHomePage(),
             Container(
               // color: Colors.green,
               alignment: Alignment.center,

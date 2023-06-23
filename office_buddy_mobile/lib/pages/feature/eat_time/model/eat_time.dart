@@ -18,6 +18,7 @@ class EatTimeModel {
   int breastMilk;
   int powderedMilk;
   String note;
+  List<Map<String, String>> other = [];
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = HashMap();
@@ -26,6 +27,7 @@ class EatTimeModel {
     json["mother_feeding"] = motherFeeding;
     json["breast_milk"] = breastMilk;
     json["powdered_milk"] = powderedMilk;
+    json["other"] = other;
     return json;
   }
 
