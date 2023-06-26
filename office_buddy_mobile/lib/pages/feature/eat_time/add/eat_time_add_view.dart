@@ -111,24 +111,26 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
                         // var food = controller.otherFood[index];
                         return swipeToDelete(
                             child: ListTile(
-                                title: Text(controller.otherFoodNameList[
-                                    controller.otherFood[index]["name"] ?? 0]),
-                                trailing: Text(controller.otherFoodSizeList[
-                                    controller.otherFood[index]["size"] ?? 0]),
-                                onTap: () => showMultipleSelect(
+                                title: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                        controller.otherFoodNameList[controller
+                                                .otherFood[index]["name"] ?? 0],
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () => showSelect(
                                     context: context,
-                                    initialItem: controller.otherFood[index],
-                                    children: {
-                                      "name": controller.otherFoodNameList
+                                    initialItem: controller.otherFood[index]["name"] ?? 0,
+                                    children: controller.otherFoodNameList
                                           .map((n) => Center(child: Text(n)))
                                           .toList(),
-                                      "size": controller.otherFoodSizeList
-                                          .map((n) => Center(child: Text(n)))
-                                          .toList()
-                                    },
-                                    onChanged: (key, value) {
+                                    onChanged: (value) {
                                       var food = controller.otherFood[index];
-                                      food[key] = value;
+                                      food["name"] = value;
                                       controller.otherFood[index] = food;
                                     })),
                             deleteHandler: () =>
@@ -140,9 +142,7 @@ class EatTimeAdd extends GetView<EatTimeAddController> {
               endIndent: 50,
             ),
             ListTile(
-              title: const Center(
-                child: Text('添加辅食'),
-              ),
+              title: const Text('添加辅食', textAlign: TextAlign.center),
               onTap: () => {
                 controller.otherFood.add({"name": 0, "size": 0})
               },
