@@ -16,7 +16,6 @@ class EatTimeAddController extends GetxController {
 
   RxList<int> milkList = [0, 170, 180, 190].obs;
   RxList<String> otherFoodNameList = ["米粉"].obs;
-  RxList<String> otherFoodSizeList = ["一半", "全部"].obs;
 
   var date = DateTime.now().obs;
   var time = TimeOfDay.now().obs;
@@ -29,19 +28,15 @@ class EatTimeAddController extends GetxController {
   void onInit() async {
     super.onInit();
     api.onInit();
-    var result = await api.get("/system-config/MilkSize,OtherFoodName,OtherFoodSize", headers: api.baseHeaders);
+    var result = await api.get("/system-config/MilkSize,OtherFoodName", headers: api.baseHeaders);
     if (result.isOk) {
       var milkSize = (result.body as List<dynamic>)[0];
       var otherFoodName = (result.body as List<dynamic>)[1];
-      var otherFoodSize = (result.body as List<dynamic>)[2];
       if(milkSize != null) {
-        milkList.value = (milkSize as List<dynamic>).map((e) => e as int).toList();
+        milkList.value = (milkSize as List<dynamic>).map((e) => int.parse(e as String)).toList();
       }
       if(otherFoodName != null) {
         otherFoodNameList.value = (otherFoodName as List<dynamic>).map((e) => e as String).toList();
-      }
-      if(otherFoodSize != null) {
-        otherFoodSizeList.value = (otherFoodSize as List<dynamic>).map((e) => e as String).toList();
       }
     }
   }
@@ -69,7 +64,6 @@ class EatTimeAddController extends GetxController {
       model.other = otherFood.map((element) {
         var o = HashMap<String, String>();
         o['name'] = otherFoodNameList[element['name'] ?? 0];
-        o['size'] = otherFoodSizeList[element['size'] ?? 0];
         return o;
       }).toList();
     }

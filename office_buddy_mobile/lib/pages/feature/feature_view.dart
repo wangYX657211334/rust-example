@@ -24,10 +24,10 @@ class FeatureView extends GetView<FeatureController> {
           Card(
             color: Colors.white,
             child: ListTile(
-              leading: Icon(Icons.date_range, size: 50.0),
-              title: Text('王知槿吃奶时间记录'),
-              subtitle: Text('记录吃奶间隔时间, 以免重复'),
-              trailing: Icon(Icons.arrow_forward_ios),
+              leading: const Icon(Icons.date_range, size: 50.0),
+              title: const Text('王知槿吃奶时间记录'),
+              subtitle: const Text('记录吃奶间隔时间, 以免重复'),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Get.toNamed(AppRoutes.eatTime);
               },
@@ -36,10 +36,10 @@ class FeatureView extends GetView<FeatureController> {
           Card(
             color: Colors.white,
             child: ListTile(
-              leading: Icon(Icons.history, size: 50.0),
-              title: Text('王知槿吃奶时间历史查询'),
-              subtitle: Text('可查询历史吃奶记录'),
-              trailing: Icon(Icons.arrow_forward_ios),
+              leading: const Icon(Icons.history, size: 50.0),
+              title: const Text('王知槿吃奶时间历史查询'),
+              subtitle: const Text('可查询历史吃奶记录'),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Get.toNamed(AppRoutes.eatTimeHistory);
               },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:office_buddy/pages/feature/system_config/system_config_view.dart';
 import 'package:office_buddy/util/base_widget.dart';
 
 import '../feature/feature_view.dart';
@@ -24,10 +25,10 @@ class HomeView extends GetView<HomeController> {
                 icon: Icon(Icons.home),
                 label: '主页',
               ),
-              // NavigationDestination(
-              //   icon: Icon(Icons.tag_faces),
-              //   label: 'AI',
-              // ),
+              NavigationDestination(
+                icon: Icon(Icons.settings),
+                label: '系统配置',
+              ),
               NavigationDestination(
                 icon: Icon(Icons.account_circle_outlined),
                 label: '个人信息',
@@ -36,7 +37,7 @@ class HomeView extends GetView<HomeController> {
           ),
           body: <Widget>[
             const FeatureView(),
-            // const MyHomePage(),
+            const SystemConfigView(),
             Container(
               // color: Colors.green,
               alignment: Alignment.center,
