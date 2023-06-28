@@ -33,7 +33,7 @@ class EatTimeAddController extends GetxController {
       var milkSize = (result.body as List<dynamic>)[0];
       var otherFoodName = (result.body as List<dynamic>)[1];
       if(milkSize != null) {
-        milkList.value = (milkSize as List<dynamic>).map((e) => int.parse(e as String)).toList();
+        milkList.value = (milkSize as List<dynamic>).map((e) => e as int).toList();
       }
       if(otherFoodName != null) {
         otherFoodNameList.value = (otherFoodName as List<dynamic>).map((e) => e as String).toList();

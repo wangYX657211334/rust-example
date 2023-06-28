@@ -139,6 +139,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  json_editor_flutter:
+    dependency: "direct main"
+    description:
+      name: json_editor_flutter
+      sha256: f4f415479dff5bb900eff55d78a3c0bca492efa50627e545e8a7849f26dd3b51
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   lint:
     dependency: transitive
     description:

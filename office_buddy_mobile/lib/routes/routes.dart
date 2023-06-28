@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:office_buddy/pages/feature/system_config/system_config_binding.dart';
-import 'package:office_buddy/pages/feature/system_config/system_config_view.dart';
 import 'package:office_buddy/pages/feature/system_config/update/system_config_update_binding.dart';
 import 'package:office_buddy/pages/feature/system_config/update/system_config_update_view.dart';
 
@@ -18,6 +16,7 @@ class AppRoutes {
   static const eatTime = "/home/eatTime";
   static const eatTimeAdd = "/home/eatTime/add";
   static const eatTimeHistory = "/home/eatTime/history";
+  static const systemConfig = "/home/systemConfig";
   static const systemConfigUpdate = "/home/systemConfig/update";
 
   static const initial = home;

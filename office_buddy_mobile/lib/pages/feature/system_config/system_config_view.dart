@@ -13,37 +13,48 @@ class SystemConfigView extends GetView<SystemConfigController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.white10,
-        title: const Text('系统配置'),
-      ),
-      body: CupertinoListSection.insetGrouped(
-        header: const Text('元数据配置'),
         backgroundColor: Colors.transparent,
-        children: <Widget>[
-          CupertinoListTile.notched(
-            leading: const Icon(Icons.filter_list_sharp),
-            title: const Text('奶量'),
-            onTap: () {
-              Get.toNamed(AppRoutes.systemConfigUpdate, arguments: {
-                "code": "MilkSize",
-                "name": "奶量"
-              });
-            },
-          ),
-          CupertinoListTile.notched(
-            leading: const Icon(Icons.flatware_sharp),
-            title: const Text('辅食'),
-            onTap: () {
-              Get.toNamed(AppRoutes.systemConfigUpdate, arguments: {
-                "code": "OtherFoodName",
-                "name": "辅食"
-              });
-            },
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.white10,
+          title: const Text('系统配置'),
+        ),
+        body: Obx(() => ListView.builder(
+            itemCount: controller.configs.length, // 假设有三个列表部分
+            itemBuilder: (BuildContext context, int index) {
+              return _SystemConfigDetail(
+                  controller.configs[index], controller.refreshData);
+            })));
+  }
+}
+
+class _SystemConfigDetail extends StatelessWidget {
+  const _SystemConfigDetail(this.group, this.refreshData, {super.key});
+
+  final Map<String, dynamic> group;
+  final Future Function() refreshData;
+
+  @override
+  Widget build(BuildContext context) {
+    var configList = (group["configs"] as List).cast<Map<String, dynamic>>();
+    return CupertinoListSection.insetGrouped(
+        header: Text(group["group"]),
+        backgroundColor: Colors.transparent,
+        children: configList
+            .map(
+              (config) => CupertinoListTile.notched(
+                title: Text(config["description"] ?? ""),
+                onTap: () async {
+                  var result = await Get.toNamed(AppRoutes.systemConfigUpdate,
+                      arguments: {
+                        "code": config["name"],
+                        "name": config["description"]
+                      });
+                  if (result == REFRESH_FLAG) {
+                    await refreshData();
+                  }
+                },
+              ),
+            )
+            .toList());
   }
 }
