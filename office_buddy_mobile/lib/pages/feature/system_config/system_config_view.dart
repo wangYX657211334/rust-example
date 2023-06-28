@@ -13,17 +13,21 @@ class SystemConfigView extends GetView<SystemConfigController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.white10,
-          title: const Text('系统配置'),
-        ),
-        body: Obx(() => ListView.builder(
-            itemCount: controller.configs.length, // 假设有三个列表部分
-            itemBuilder: (BuildContext context, int index) {
-              return _SystemConfigDetail(
-                  controller.configs[index], controller.refreshData);
-            })));
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: Colors.white10,
+        title: const Text('系统配置'),
+      ),
+      body: Obx(() => BaseWidget.pullUpRefresh(
+            ListView.builder(
+                itemCount: controller.configs.length, // 假设有三个列表部分
+                itemBuilder: (BuildContext context, int index) {
+                  return _SystemConfigDetail(
+                      controller.configs[index], controller.refreshData);
+                }),
+            controller.refreshData),
+      ),
+    );
   }
 }
 

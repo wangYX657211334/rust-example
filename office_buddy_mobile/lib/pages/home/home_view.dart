@@ -29,20 +29,20 @@ class HomeView extends GetView<HomeController> {
                 icon: Icon(Icons.settings),
                 label: '系统配置',
               ),
-              NavigationDestination(
-                icon: Icon(Icons.account_circle_outlined),
-                label: '个人信息',
-              ),
+              // NavigationDestination(
+              //   icon: Icon(Icons.account_circle_outlined),
+              //   label: '个人信息',
+              // ),
             ],
           ),
           body: <Widget>[
             const FeatureView(),
             const SystemConfigView(),
-            Container(
-              // color: Colors.green,
-              alignment: Alignment.center,
-              child: const Text('正在建设中!'),
-            ),
+            // Container(
+            //   // color: Colors.green,
+            //   alignment: Alignment.center,
+            //   child: const Text('正在建设中!'),
+            // ),
           ][controller.navigationBarIndex.value],
         )));
   }
