@@ -35,13 +35,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   intl: ^0.18.1
   json_editor_flutter: ^0.1.0
+  # https://api.flutter.dev/flutter/material/Icons-class.html
+  # https://api.flutter.dev/flutter/cupertino/CupertinoIcons-class.html#constants
   cupertino_icons: ^1.0.2
   styled_widget: ^0.4.1
   get: 4.6.1
   lottie: 2.3.2
-#  get: 5.0.0-release-candidate-4
-
-  flutter_svg: ^2.0.6
 
 dev_dependencies:
   flutter_test:
