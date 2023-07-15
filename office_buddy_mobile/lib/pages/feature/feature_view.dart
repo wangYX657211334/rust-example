@@ -47,6 +47,7 @@ class FeatureView extends GetView<FeatureController> {
           ),
           _StopItem(controller, "辽BC93A2", '停车'),
           _StopItem(controller, "黑A7V1D5", '猛子专属'),
+          _StopItem(controller, "辽BVC663", '代步车'),
 
           Card(
             color: Colors.white,
